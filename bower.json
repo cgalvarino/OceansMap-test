@@ -1,0 +1,28 @@
+{
+  "name": "test2",
+  "authors": [
+    "Charlton Galvarino <charlton@2creek.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "leaflet": "^1.3.4",
+    "Leaflet.MousePosition": "git://github.com/asascience-open/Leaflet.MousePosition#master",
+    "esri-leaflet": "^2.2.3",
+    "leaflet-draw": "^1.0.3",
+    "leaflet.markercluster": "^1.4.1",
+    "leaflet.wms": "^0.2.0",
+    "leaflet-icon-pulse": "leaflet-pulse-icon#^0.1.0",
+    "Leaflet.ZomoBox": "git://github.com/consbio/Leaflet.ZoomBox.git#0.5.0",
+    "leaflet-measure": "~2.1.7"
+  }
+}

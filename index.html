@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="bower_components/Leaflet.MousePosition/src/L.Control.MousePosition.css"/>
+    <link rel="stylesheet" href="bower_components/leaflet-draw/dist/leaflet.draw.css"/>
+    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css"/>
+    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="bower_components/leaflet-icon-pulse/src/L.Icon.Pulse.css"/>
+    <link rel="stylesheet" href="bower_components/Leaflet.ZomoBox/L.Control.ZoomBox.css"/>
+    <link rel="stylesheet" href="bower_components/leaflet-measure/dist/leaflet-measure.css"/>
+
+    <script src="bower_components/leaflet/dist/leaflet.js"></script>
+    <script src="bower_components/esri-leaflet/dist/esri-leaflet.js"></script>
+    <script src="bower_components/Leaflet.MousePosition/src/L.Control.MousePosition.js"></script>
+    <script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
+    <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="realworld.388.js"></script>
+    <script src="bower_components/leaflet.wms/dist/leaflet.wms.js"></script>
+    <script src="bower_components/leaflet-icon-pulse/src/L.Icon.Pulse.js"></script>
+    <script src="bower_components/Leaflet.ZomoBox/L.Control.ZoomBox.js"></script>
+    <script src="bower_components/leaflet-measure/dist/leaflet-measure.js"></script>
+
+    <title>
+      Core OceansMap Libraries
+    </title>
+
+    <style>
+      #mapid { height: 480px; }
+    </style>
+  </head>
+  <body>
+    <h3>
+      This is a crude test of core OceansMap libraries to make sure upgrades don't wreak havoc.
+    </h3>
+    <ul>
+      <li>leaflet-easybutton is in the current OM version, but it doesn't appear to be used by OM.  That's good because it isn't supported in this more recent version of Leaflet.</li>
+      <li>The recent version(s) of leaflet-measure don't appear to be very bower friendly.  Sticking w/ 2.1.7 seems fine.</li>
+      <li>OM uses Leaflet.label which has been deprecated.  The core Leaflet has L.Tooltip which should be used instead.</li>
+    </ul>
+    <div id="mapid"></div>
+    <script>
+      var map = L.map('mapid').setView([-34.45221847282655, 174.63867187500003], 3);
+
+      L.esri.basemapLayer("Topographic").addTo(map);
+
+      L.control.mousePosition().addTo(map);
+
+      var drawControl = new L.Control.Draw({position: 'topright'});
+      map.addControl(drawControl);
+
+      var markers = L.markerClusterGroup();
+      for (var i = 0; i < addressPoints.length; i++) {
+        var a = addressPoints[i];
+        var title = a[2];
+        var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+        marker.bindPopup(title);
+        markers.addLayer(marker);
+      }
+      map.addLayer(markers);
+
+      var overlay = L.WMS.overlay(
+        'http://coastmap.com/ecop/wms.aspx',
+        {
+          layers: 'WW3_WAVE_HEIGHT',
+          styles: 'WAVE_HEIGHT_STYLE-Jet-0-8',
+          format: 'image/png',
+          time: '2018-10-08T18:00:00Z',
+          exceptions: 'application/vnd.ogc.se_xml',
+          transparent: true
+        }
+      );
+      overlay.addTo(map);
+
+      var pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'red'});
+      L.marker([-27.371767300523032, 135.79101562500003],{icon: pulsingIcon}).addTo(map);
+
+      var options = {
+        modal: true,
+        title: "Box area zoom"
+      };
+      var control = L.control.zoomBox(options);
+      map.addControl(control);
+
+      var measureControl = new L.Control.Measure();
+      measureControl.addTo(map);
+
+    </script>
+  </body>
+</html>
