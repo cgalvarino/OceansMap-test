@@ -43,6 +43,20 @@
 
       L.esri.basemapLayer("Topographic").addTo(map);
 
+/*
+      // A working L.esri.imageMapLayer since Blue Marble is SOL.
+      L.esri.imageMapLayer({
+        url: 'https://landsat2.arcgis.com/arcgis/rest/services/Landsat8_Views/ImageServer'
+      }).addTo(map);
+*/
+
+      // Monthly Blue Marble (runs into a CORS error)
+      L.esri.imageMapLayer({
+        url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer',
+        from: new Date(1072915200000),
+        to: new Date(1075593600000),
+      }).addTo(map);
+
       L.control.mousePosition().addTo(map);
 
       var drawControl = new L.Control.Draw({position: 'topright'});
