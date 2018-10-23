@@ -55,6 +55,7 @@
         url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer',
         from: new Date(1072915200000),
         to: new Date(1075593600000),
+        useCors: false,
       }).addTo(map);
 
       L.control.mousePosition().addTo(map);
@@ -83,7 +84,7 @@
           transparent: true
         }
       );
-      overlay.addTo(map);
+      // overlay.addTo(map);
 
       var pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'red'});
       L.marker([-27.371767300523032, 135.79101562500003],{icon: pulsingIcon}).addTo(map);
